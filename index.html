@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon"
+        href="https://raw.githubusercontent.com/your-code-is-my-property/crappy-todo-app/8e90f021edba350182363d866d1aceda63686b83/public/favicon.svg"
+        type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Todo App</title>
+
+    <style>
+        :root {
+            --primary-color: #1F1D2B;
+            --secondary-color: #272636;
+            --text-color: #ffffff;
+            --accent-color: #6F6FC8;
+            --danger-color: #FE4343;
+        }
+
+        body {
+            font-family: sans-serif;
+            background: var(--primary-color);
+            color: var(--text-color);
+            padding: 10px 20px;
+        }
+
+        button {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        h1 {
+            font-size: 2em;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="container">
+
+        <h1>Todo App</h1>
+
+        <form id="todo-form">
+            <div class="input">
+                <input type="text" autocomplete="off" id="todo-input" placeholder="To do ?" />
+                <button type="submit"><i class="fas fa-plus"></i></button>
+            </div>
+        </form>
+
+        <div class="options">
+            <button id="all-btn">All</button>
+            <button id="completed-btn">Completed</button>
+            <button id="todo-btn">Todo</button>
+        </div>
+
+        <div id="todos">
+
+        </div>
+
+    </section>
+
+    <script>
+        let filter = "all";
+        let allTodoItems = [];
+
+        const todoItemsContainer = document.getElementById('todos');
+
+        todoItemsContainer.addEventListener('click', (event) => {
+            const id = event.target.getAttribute('data-id');
+            const isDeleteButton = event.target.getAttribute('data-delete')
+
+            if (isDeleteButton) {
+                deleteTodo(id)
+            } else {
+                resolveTodo(id)
+            }
+        })
+
+        // render todo items to dom
+        function renderTodoItems() {
+            storage(true); // save things local storage
+
+            const todoItems = filter == "all"
+                ? allTodoItems : filter == "done"
+                    ? allTodoItems.filter(item => item.done) : allTodoItems.filter(item => !item.done)
+
+            todoItemsContainer.innerHTML = "";
+
+            todoItems.forEach(item => {
+                const template = `
+                    <div class="todo" id="${item.id}">
+                        <div class="todo-content">
+                            <input data-id="${item.id}" onchange="resolveTodo" class="checkbox" type="checkbox" ${item.done ? "checked" : ""} />
+                            <p class=${item.done ? "completed-task" : ""}>${item.value}</p>
+                        </div>
+                        <button data-id="${item.id}" data-delete="true">
+                            <i data-id="${item.id}" data-delete="true" class="far fa-trash-alt"></i>
+                        </button>
+                    </div>
+                `
+
+                todoItemsContainer.innerHTML += template;
+            })
+        }
+
+        // add todo
+        const todoForm = document.getElementById('todo-form');
+
+        todoForm.addEventListener('submit', event => {
+            event.preventDefault();
+
+            const todoInput = document.getElementById('todo-input');
+            const todoValue = todoInput.value;
+
+            if (todoValue.trim().length === 0) {
+                alert('Todo cannot be empty');
+                return;
+            }
+
+            todoInput.value = ""; // clear value of input
+
+            const newTodo = { value: todoValue, done: false, id: Date.now() }
+            allTodoItems.push(newTodo);
+            renderTodoItems()
+        });
+
+        // resolve todo
+        function resolveTodo(id) {
+            allTodoItems.map(todoItem => {
+                if (todoItem.id == id) {
+                    todoItem.done = !todoItem.done
+                }
+                return todoItem
+            })
+            console.log(allTodoItems);
+            renderTodoItems();
+        }
+
+        // delete todo
+        function deleteTodo(id) {
+            if (window.confirm) {
+                const permission = window.confirm('Are you sure ??');
+                if (!permission) return;
+            }
+
+            const parentContainer = document.getElementById(id);
+            parentContainer.classList.add('fall');
+
+            setTimeout(() => { // fall animation needs at least 1 sec 
+                allTodoItems = allTodoItems.filter(todoItem => todoItem.id != id);
+                renderTodoItems();
+            }, 1000);
+
+        }
+
+        // local storage
+        function storage(isSave) {
+            if (!localStorage) return;
+
+            if (isSave) {
+                localStorage.setItem('todos', JSON.stringify(allTodoItems))
+            } else {
+                const todoItems = localStorage.getItem('todos')
+                allTodoItems = todoItems ? JSON.parse(todoItems) : allTodoItems
+            }
+        }
+
+        storage(false);
+        renderTodoItems();
+
+    </script>
+</body>
+
+</html>

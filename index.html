@@ -136,7 +136,14 @@
 
         // resolve todo
         function resolveTodo(id) {
-
+            allTodoItems.map(todoItem => {
+                if (todoItem.id == id) {
+                    todoItem.done = !todoItem.done
+                }
+                return todoItem
+            })
+            console.log(allTodoItems);
+            renderTodoItems();
         }
 
         // delete todo

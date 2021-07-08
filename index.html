@@ -44,6 +44,35 @@
             flex-direction: column;
             margin-top: 50px;
         }
+
+        input {
+            background: var(--secondary-color);
+            width: 60%;
+            border: none;
+            outline: none;
+            padding: 18px;
+            margin: 2px;
+            font-size: 20px;
+            color: #ffffff;
+        }
+
+        .input {
+            background: var(--secondary-color);
+            border: 2px solid transparent;
+            border-radius: 10px;
+            transition: 0.5s;
+            width: 500px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .input:hover {
+            border: 2px solid var(--accent-color);
+        }
+
+        .input:focus {
+            border: 2px solid var(--accent-color);
+        }
     </style>
 </head>
 

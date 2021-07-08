@@ -8,6 +8,9 @@
     <link rel="shortcut icon"
         href="https://raw.githubusercontent.com/your-code-is-my-property/crappy-todo-app/8e90f021edba350182363d866d1aceda63686b83/public/favicon.svg"
         type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Todo App</title>
 
     <style>
@@ -46,13 +49,18 @@
 
 <body>
     <section class="container">
-        <!-- title -->
-        <h1>Todo App</h1>
-        <!-- input -->
 
-        <!-- buttons -->
+        <h1>Todo App</h1>
+
+        <form onsubmit="handleFormSubmit()">
+            <div class="input">
+                <input type="text" placeholder="To do ?" />
+                <button type="submit"><i class="fas fa-plus"></i></button>
+            </div>
+        </form>
 
         <!-- items -->
+
     </section>
 
     <script>

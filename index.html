@@ -54,7 +54,7 @@
 
         <form id="todo-form">
             <div class="input">
-                <input type="text" id="todo-input" placeholder="To do ?" />
+                <input type="text" autocomplete="off" id="todo-input" placeholder="To do ?" />
                 <button type="submit"><i class="fas fa-plus"></i></button>
             </div>
         </form>
@@ -78,6 +78,7 @@
         // render todo items to dom
         function renderTodoItems(todoItems = []) {
             const todoItemsContainer = document.getElementById('todos');
+            todoItemsContainer.innerHTML = "";
 
             todoItems.forEach(item => {
                 const template = `

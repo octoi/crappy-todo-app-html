@@ -60,9 +60,9 @@
         </form>
 
         <div class="options">
-            <button id="all-btn">All</button>
-            <button id="completed-btn">Completed</button>
-            <button id="todo-btn">Todo</button>
+            <button class="filter-btn" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="done">Completed</button>
+            <button class="filter-btn" data-filter="todo">Todo</button>
         </div>
 
         <div id="todos">
@@ -76,6 +76,12 @@
         let allTodoItems = [];
 
         const todoItemsContainer = document.getElementById('todos');
+
+        const options = document.querySelector('.options');
+        options.addEventListener('click', event => {
+            filter = event.target.getAttribute('data-filter');
+            renderTodoItems();
+        });
 
         todoItemsContainer.addEventListener('click', (event) => {
             const id = event.target.getAttribute('data-id');
@@ -144,7 +150,6 @@
                 }
                 return todoItem
             })
-            console.log(allTodoItems);
             renderTodoItems();
         }
 

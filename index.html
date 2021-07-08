@@ -76,13 +76,17 @@
         let allTodoItems = [];
 
         // render todo items to dom
-        function renderTodoItems(todoItems = []) {
+        function renderTodoItems() {
+            const todoItems = filter == "all"
+                ? allTodoItems : filter == "done"
+                    ? allTodoItems.filter(item => item.done) : allTodoItems.filter(item => !item.done)
+
             const todoItemsContainer = document.getElementById('todos');
             todoItemsContainer.innerHTML = "";
 
             todoItems.forEach(item => {
                 const template = `
-                    <div className="todo" ref={todoRef}>
+                    <div className="todo" id="${item.id}">
                         <div className="todo-content">
                             <input className="checkbox" type="checkbox" ${item.done ? "checked" : ""} />
                             <p class=${item.done ? "completed-task" : ""}>${item.value}</p>
@@ -111,9 +115,9 @@
 
             todoInput.value = ""; // clear value of input
 
-            const newTodo = { value: todoValue, done: false }
+            const newTodo = { value: todoValue, done: false, id: Date.now() }
             allTodoItems.push(newTodo);
-            renderTodoItems(allTodoItems)
+            renderTodoItems()
         });
 
     </script>

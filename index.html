@@ -148,6 +148,18 @@
 
         // delete todo
         function deleteTodo(id) {
+            if (window.confirm) {
+                const permission = window.confirm('Are you sure ??');
+                if (!permission) return;
+            }
+
+            const parentContainer = document.getElementById(id);
+            parentContainer.classList.add('fall');
+
+            setTimeout(() => { // fall animation needs at least 1 sec 
+                allTodoItems = allTodoItems.filter(todoItem => todoItem.id != id);
+                renderTodoItems();
+            }, 1000);
 
         }
 

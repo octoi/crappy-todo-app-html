@@ -90,6 +90,8 @@
 
         // render todo items to dom
         function renderTodoItems() {
+            storage(true); // save things local storage
+
             const todoItems = filter == "all"
                 ? allTodoItems : filter == "done"
                     ? allTodoItems.filter(item => item.done) : allTodoItems.filter(item => !item.done)
@@ -162,6 +164,21 @@
             }, 1000);
 
         }
+
+        // local storage
+        function storage(isSave) {
+            if (!localStorage) return;
+
+            if (isSave) {
+                localStorage.setItem('todos', JSON.stringify(allTodoItems))
+            } else {
+                const todoItems = localStorage.getItem('todos')
+                allTodoItems = todoItems ? JSON.parse(todoItems) : allTodoItems
+            }
+        }
+
+        storage(false);
+        renderTodoItems();
 
     </script>
 </body>

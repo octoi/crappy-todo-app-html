@@ -213,7 +213,7 @@
         </form>
 
         <div class="options">
-            <button class="filter-btn" data-filter="all">All</button>
+            <button class="filter-btn selected-btn" data-filter="all">All</button>
             <button class="filter-btn" data-filter="done">Completed</button>
             <button class="filter-btn" data-filter="todo">Todo</button>
         </div>
@@ -233,6 +233,11 @@
         const options = document.querySelector('.options');
         options.addEventListener('click', event => {
             filter = event.target.getAttribute('data-filter');
+
+            let oldSelected = document.querySelector('.selected-btn');
+            oldSelected.classList.remove('selected-btn');
+
+            event.target.classList.add('selected-btn');
             renderTodoItems();
         });
 

@@ -75,6 +75,25 @@
         let filter = "all";
         let allTodoItems = [];
 
+        // render todo items to dom
+        function renderTodoItems(todoItems = []) {
+            const todoItemsContainer = document.getElementById('todos');
+
+            todoItems.forEach(item => {
+                const template = `
+                    <div className="todo" ref={todoRef}>
+                        <div className="todo-content">
+                            <input className="checkbox" type="checkbox" ${item.done ? "checked" : ""} />
+                            <p class=${item.done ? "completed-task" : ""}>${item.value}</p>
+                        </div>
+                        <button><i class="far fa-trash-alt"></i></button>
+                    </div>
+                `
+
+                todoItemsContainer.innerHTML += template;
+            })
+        }
+
         // add todo
         const todoForm = document.getElementById('todo-form');
 
@@ -93,6 +112,7 @@
 
             const newTodo = { value: todoValue, done: false }
             allTodoItems.push(newTodo);
+            renderTodoItems(allTodoItems)
         });
 
     </script>

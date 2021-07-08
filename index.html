@@ -89,6 +89,18 @@
             opacity: 0.5;
         }
 
+        .todo {
+            width: 500px;
+            background: var(--secondary-color);
+            border-radius: 10px;
+            border: 2px solid transparent;
+            transition: 0.5s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
         .todo p {
             font-size: 20px;
             cursor: pointer;
@@ -108,6 +120,11 @@
 
         .todo:hover {
             border: 2px solid var(--accent-color);
+        }
+
+        .todo-content {
+            display: flex;
+            align-items: center;
         }
     </style>
 </head>

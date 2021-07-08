@@ -52,9 +52,9 @@
 
         <h1>Todo App</h1>
 
-        <form onsubmit="handleFormSubmit()">
+        <form id="todo-form">
             <div class="input">
-                <input type="text" placeholder="To do ?" />
+                <input type="text" id="todo-input" placeholder="To do ?" />
                 <button type="submit"><i class="fas fa-plus"></i></button>
             </div>
         </form>
@@ -65,11 +65,35 @@
             <button id="todo-btn">Todo</button>
         </div>
 
-        <!-- items -->
+        <div id="todos">
+
+        </div>
 
     </section>
 
     <script>
+        let filter = "all";
+        let allTodoItems = [];
+
+        // add todo
+        const todoForm = document.getElementById('todo-form');
+
+        todoForm.addEventListener('submit', event => {
+            event.preventDefault();
+
+            const todoInput = document.getElementById('todo-input');
+            const todoValue = todoInput.value;
+
+            if (todoValue.trim().length === 0) {
+                alert('Todo cannot be empty');
+                return;
+            }
+
+            todoInput.value = ""; // clear value of input
+
+            const newTodo = { value: todoValue, done: false }
+            allTodoItems.push(newTodo);
+        });
 
     </script>
 </body>

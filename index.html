@@ -210,6 +210,7 @@
                 <input type="text" autocomplete="off" id="todo-input" placeholder="To do ?" />
                 <button type="submit"><i class="fas fa-plus"></i></button>
             </div>
+            <p class="error-message" id="error-message"></p>
         </form>
 
         <div class="options">
@@ -288,8 +289,11 @@
             const todoInput = document.getElementById('todo-input');
             const todoValue = todoInput.value;
 
+            const errorMessage = document.getElementById('error-message');
+            errorMessage.innerText = "";
+
             if (todoValue.trim().length === 0) {
-                alert('Todo cannot be empty');
+                errorMessage.innerText = 'Oops! Todo cannot be blank';
                 return;
             }
 

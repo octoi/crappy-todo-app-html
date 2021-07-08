@@ -75,23 +75,37 @@
         let filter = "all";
         let allTodoItems = [];
 
+        const todoItemsContainer = document.getElementById('todos');
+
+        todoItemsContainer.addEventListener('click', (event) => {
+            const id = event.target.getAttribute('data-id');
+            const isDeleteButton = event.target.getAttribute('data-delete')
+
+            if (isDeleteButton) {
+                deleteTodo(id)
+            } else {
+                resolveTodo(id)
+            }
+        })
+
         // render todo items to dom
         function renderTodoItems() {
             const todoItems = filter == "all"
                 ? allTodoItems : filter == "done"
                     ? allTodoItems.filter(item => item.done) : allTodoItems.filter(item => !item.done)
 
-            const todoItemsContainer = document.getElementById('todos');
             todoItemsContainer.innerHTML = "";
 
             todoItems.forEach(item => {
                 const template = `
-                    <div className="todo" id="${item.id}">
-                        <div className="todo-content">
-                            <input className="checkbox" type="checkbox" ${item.done ? "checked" : ""} />
+                    <div class="todo" id="${item.id}">
+                        <div class="todo-content">
+                            <input data-id="${item.id}" onchange="resolveTodo" class="checkbox" type="checkbox" ${item.done ? "checked" : ""} />
                             <p class=${item.done ? "completed-task" : ""}>${item.value}</p>
                         </div>
-                        <button><i class="far fa-trash-alt"></i></button>
+                        <button data-id="${item.id}" data-delete="true">
+                            <i data-id="${item.id}" data-delete="true" class="far fa-trash-alt"></i>
+                        </button>
                     </div>
                 `
 
@@ -119,6 +133,16 @@
             allTodoItems.push(newTodo);
             renderTodoItems()
         });
+
+        // resolve todo
+        function resolveTodo(id) {
+
+        }
+
+        // delete todo
+        function deleteTodo(id) {
+
+        }
 
     </script>
 </body>
